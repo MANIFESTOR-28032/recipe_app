@@ -1,76 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:recipe_app/core/client.dart';
+import 'package:recipe_app/onboarding/data/repositories/onboarding_repository.dart';
+import 'package:recipe_app/onboarding/presentation/pages/onboarding_view.dart';
+import 'package:recipe_app/onboarding/presentation/pages/onboarding_view_model.dart';
+import 'package:recipe_app/profile/data/repositories/profile_repository.dart';
+import 'package:recipe_app/profile/presentation/pages/profile_view.dart';
+import 'package:recipe_app/profile/presentation/pages/profile_view_model.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(RecipeApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+GoRouter router = GoRouter(
+  initialLocation: '/onboarding',
+  routes: [],
+);
+
+class RecipeApp extends StatelessWidget {
+  const RecipeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Home Page"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, left: 15),
-              child: Column(
-                children: [
-                  Image.asset('asset/image1.png'),
-                  SizedBox(height: 10),
-                  Text(
-                    'Lunch',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 20),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0, right: 15),
-              child: Column(
-                children: [
-                  Image.asset('asset/image2.png'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Breakfast',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      home: ProfileView(viewModel: ProfileViewModel(repo: ProfileRepository(client: ApiClient()))),
     );
   }
 }
