@@ -1,29 +1,20 @@
-import 'package:flutter/cupertino.dart';
-import 'package:recipe_app/profile/data/models/profile_model.dart';
-import 'package:recipe_app/profile/data/models/profile_recipes_model.dart';
-import 'package:recipe_app/profile/data/repositories/profile_repository.dart';
+import 'package:flutter/material.dart';
+import '../../data/models/recipe_model.dart';
+import '../../data/repository/profile_repository.dart';
 
-class ProfileViewModel extends ChangeNotifier {
-  ProfileViewModel({
-    required ProfileRepository repo,
-  }) : _repo = repo {
+class CategoriesViewModel extends ChangeNotifier {
+  CategoriesViewModel({required ProfileRepository repo}) : _repo = repo {
     load();
   }
 
   final ProfileRepository _repo;
 
-  ProfileModel? profile;
-  late List<ProfileRecipesModel> recipes;
+   List<ProfileModel>? myProfile;
 
-  bool loading = true;
-
-  Future<void> load() async {
-    loading = true;
-    notifyListeners();
-
-    profile = await _repo.fetchProfile();
-    recipes = await _repo.fetchRecipes();
-    loading = false;
-    notifyListeners();
+  Future load() async {
+    print("nimadir");
+   myProfile = await _repo.fetchMyProfile();
+   print(myProfile.toString());
+   notifyListeners();
   }
 }
